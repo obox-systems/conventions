@@ -3,7 +3,7 @@
 ### Structure
 
 - Name
-- Сompetencies
+- Сompetencies ( no need in readme )
 - Abstract
 - Screenshot
 - Ho to run ( only in readme )
