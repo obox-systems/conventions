@@ -10,7 +10,7 @@
 
 ### Competencies
 
-Crates, technologies, and skills used:
+Crates/library, technologies, and skills used:
 
 - Must be as descriptive as possible, even simple crates are welcome
 - Explanation of why you chose them
