@@ -7,7 +7,7 @@
 - Abstract
 - Screenshot
 
-### Compentencies
+### Competencies
 
 Crates, technologies, and skills used:
 
@@ -35,11 +35,11 @@ Demo description: 5-10 sentences about the problem and how this demo solves it:
 The `Try it out!` section
 
 - Steps to use the demo
-- Every external dependency should be specified preferably with steps to install them
+- Every external dependency should be specified, preferably with steps to install them
 - Descriptive information about each step
 - Example for demos involving Rust:
 ```
-      ## Try it out!
+      ### Try it out!
 
       1. Install [Rust](https://rustup.rs/)
       2. Set up MongoDB docker instance
@@ -54,14 +54,14 @@ The `Try it out!` section
   
 ### Screenshot 
  
-Preferebly to show screenshots
+Preferably to show screenshots.
  
-- If your demo doesn't have any meaningful output you can use a screenshot of code that describes your demo logic in the best way ( ex. API usage )
+- If your demo doesn't have any meaningful output, you can use a screenshot of code that describes your demo logic in the best way ( ex. API usage )
 
 ### Distribution
 
-Duplicate and sync description in 3 places
+Duplicate and sync description in 3 places.
 
+- In your google doc portfolio
 - At your profile
-- In your google doc porfolio
 - In a readme file of the repository
