@@ -6,6 +6,7 @@
 - Сompetencies
 - Abstract
 - Screenshot
+- Ho to run ( only in readme )
 
 ### Competencies
 
