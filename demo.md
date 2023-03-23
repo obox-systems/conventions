@@ -4,6 +4,7 @@
   - How does it work 
   - What does it do 
   - Technologies used
+
 - Crates, technologies, and skills used:
   - Must be as descriptive as possible, even simple crates are welcome
   - Explanation of why you chose them
@@ -22,6 +23,7 @@
   - Example for demos involving Rust:
   ```
         ## Try it out!
+        
         1. Install [Rust](https://rustup.rs/)
         2. Set up MongoDB docker instance
         ```bash
