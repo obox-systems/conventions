@@ -2,11 +2,10 @@
 
 ### Structure
 
-Demo description: 5-10 sentences about the problem and how this demo solves it:
-
-- How does it work 
-- What does it do 
-- Competencies involved
+- Name
+- Сompetencies
+- Abstract
+- Screenshot
 
 ### Compentencies
 
@@ -22,6 +21,14 @@ For this demo, I've used `serde`/`serde_json` crates for API messages serializat
 the `actix-web` crate of `actix` framework for API server and routing,
 and `tokio` for async runtime used by `actix`. 
 ```
+
+### Abstract
+
+Demo description: 5-10 sentences about the problem and how this demo solves it:
+
+- How does it work 
+- What does it do 
+- Competencies involved
 
 ### How to run
 
@@ -45,7 +52,7 @@ The `Try it out!` section
       ```
 ```
   
- ### Screenshot 
+### Screenshot 
  
 Preferebly to show screenshots
  
