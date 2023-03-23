@@ -27,8 +27,8 @@ and `tokio` for async runtime used by `actix`.
 
 Demo description: 5-10 sentences about the problem and how this demo solves it:
 
-- How does it work 
 - What does it do 
+- How does it work 
 - Competencies involved
 
 ### How to run
