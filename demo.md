@@ -1,4 +1,4 @@
-# Demo apps recommendations
+# How to describe a demo
 
 - Demo description: 5-10 sentences about the problem and how this demo solves it:
   - How does it work 
