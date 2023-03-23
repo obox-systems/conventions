@@ -14,6 +14,7 @@
   For this demo, I've used `serde`/`serde_json` crates for API messages serialization and deserialization,
   the `actix-web` crate of `actix` framework for API server and routing,
   and `tokio` for async runtime used by `actix`. 
+  ```
 - The `Try it out!` section
   - Steps to use the demo
   - Every external dependency should be specified preferably with steps to install them
