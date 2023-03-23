@@ -59,6 +59,13 @@ Preferably to show screenshots.
  
 - If your demo doesn't have any meaningful output, you can use a screenshot of code that describes your demo logic in the best way ( ex. API usage )
 
+### Repository should have
+
+- Name
+- Abstract
+- Try it out
+- Screenshot
+
 ### Distribution
 
 Duplicate and sync description in 3 places.
