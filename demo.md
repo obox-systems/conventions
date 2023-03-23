@@ -1,9 +1,13 @@
 # How to describe a demo
 
+### Structure
+
 - Demo description: 5-10 sentences about the problem and how this demo solves it:
   - How does it work 
   - What does it do 
-  - Technologies used
+  - Competencies involved
+
+### Compentencies
 
 - Crates, technologies, and skills used:
   - Must be as descriptive as possible, even simple crates are welcome
@@ -34,5 +38,16 @@
         cargo run --release
         ```
   ```
+  
+ ### Screenshot 
+ 
 - Screenshot ( preferably )
   - If your demo doesn't have any meaningful output you can use a screenshot of code that describes your demo logic in the best way ( ex. API usage )
+
+### Distribution
+
+Duplicate and sync description in 3 places
+
+- At your profile
+- In your google doc porfolio
+- In a readme file of the repository
