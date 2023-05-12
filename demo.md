@@ -6,7 +6,7 @@
 - Сompetencies ( no need in readme )
 - Abstract
 - Screenshot
-- Ho to run ( only in readme )
+- How to run ( only in readme )
 
 ### Competencies
 
@@ -73,3 +73,12 @@ Duplicate and sync description in 3 places.
 - In your google doc portfolio
 - At your profile
 - In a readme file of the repository
+
+### Lints and warnings
+
+Make sure you have no warnings from clippy with this lints enabled:
+```
+#![ warn( rust_2018_idioms ) ]
+#![ warn( missing_debug_implementations ) ]
+#![ warn( missing_docs ) ]
+```
