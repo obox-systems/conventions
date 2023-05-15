@@ -53,9 +53,9 @@ The `Try it out!` section
       ```
 ```
   
-### Screenshot 
+### Screenshot or gif
  
-Preferably to show screenshots.
+Preferably to show screenshots. Preferably gif of how it works.
  
 - If your demo doesn't have any meaningful output, you can use a screenshot of code that describes your demo logic in the best way ( ex. API usage )
 
@@ -64,7 +64,7 @@ Preferably to show screenshots.
 - Name
 - Abstract
 - Try it out
-- Screenshot
+- Screenshot or gif
 
 Make sure it's what it does and how to use it.
 
