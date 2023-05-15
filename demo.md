@@ -66,6 +66,8 @@ Preferably to show screenshots.
 - Try it out
 - Screenshot
 
+Make sure it's what it does and how to use it.
+
 ### Distribution
 
 Duplicate and sync description in 3 places.
