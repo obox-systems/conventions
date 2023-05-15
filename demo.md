@@ -74,7 +74,9 @@ Duplicate and sync description in 3 places.
 - At your profile
 - In a readme file of the repository
 
-### Lints and warnings
+### Other recommendations 
+
+#### Lints and warnings
 
 Make sure you have no warnings from clippy with this lints enabled:
 ```
