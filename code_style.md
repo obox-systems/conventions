@@ -1,36 +1,5 @@
-# Code Style
+# Code Style Rules
 
-#### Lints and warnings
-
-Make sure you have no warnings from clippy with this lints enabled:
-
-```rust
-# Ensures code follows Rust 2018 edition best practices.
-// Requires documentation for all public items.
-#![ warn( missing_debug_implementations ) ]
-// Ensures public types implement Debug.
-#![ warn( missing_docs ) ]
-// Ensures code follows Rust 2018 edition best practices.
-#![ deny( rust_2018_idioms ) ]
-// Prevents use of features that may break in future Rust versions.
-#![ deny( future_incompatible ) ]
-// Disallows unsafe code, promoting safety.
-#![ deny( unsafe_code ) ]
-```
-
-```toml
-[workspace.lints.rust]
-# Requires documentation for all public items.
-missing_docs = "warn"
-# Ensures public types implement Debug.
-missing_debug_implementations = "warn"
-# Ensures code follows Rust 2018 edition best practices.
-rust_2018_idioms = "deny"
-# Prevents use of features that may break in future Rust versions.
-future_incompatible = "deny"
-# Disallows unsafe code, promoting safety.
-unsafe-code = "deny"
-```
 
 #### Use::*
 
@@ -63,3 +32,63 @@ use some_module::{ item1, item2 }
 ```
 
 This approach not only simplifies the import statements but also makes the code more consistent and easier to read and maintain. Remember, the goal is to achieve clarity and simplicity in your codebase, ensuring that imports are managed in a straightforward and uniform manner.
+
+#### Lints and warnings
+
+Make sure you have no warnings from clippy with this lints enabled:
+
+```rust
+# Ensures code follows Rust 2018 edition best practices.
+// Requires documentation for all public items.
+#![ warn( missing_debug_implementations ) ]
+// Ensures public types implement Debug.
+#![ warn( missing_docs ) ]
+// Ensures code follows Rust 2018 edition best practices.
+#![ deny( rust_2018_idioms ) ]
+// Prevents use of features that may break in future Rust versions.
+#![ deny( future_incompatible ) ]
+// Disallows unsafe code, promoting safety.
+#![ deny( unsafe_code ) ]
+```
+
+> ✅ **Good**
+
+```toml
+[workspace.lints.rust]
+# Requires documentation for all public items.
+missing_docs = "warn"
+# Ensures public types implement Debug.
+missing_debug_implementations = "warn"
+# Ensures code follows Rust 2018 edition best practices.
+rust_2018_idioms = "deny"
+# Prevents use of features that may break in future Rust versions.
+future_incompatible = "deny"
+# Disallows unsafe code, promoting safety.
+unsafe-code = "deny"
+```
+
+#### Prefer workspace lints over entry file lints
+
+Make sure you have no warnings from clippy with this lints enabled:
+
+> ❌ **Bad**
+
+```rust
+# Ensures code follows Rust 2018 edition best practices.
+#![ warn( missing_debug_implementations ) ]
+#![ warn( missing_docs ) ]
+#![ deny( rust_2018_idioms ) ]
+#![ deny( future_incompatible ) ]
+#![ deny( unsafe_code ) ]
+```
+
+> ✅ **Good**
+
+```toml
+[workspace.lints.rust]
+missing_docs = "warn"
+missing_debug_implementations = "warn"
+rust_2018_idioms = "deny"
+future_incompatible = "deny"
+unsafe-code = "deny"
+```
