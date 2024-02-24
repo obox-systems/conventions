@@ -113,7 +113,7 @@ mod secure_connection
 
 > ✅ **Good**
 
-Ordinary doc comments //! provide a clearer, more idiomatic way to document modules and functions, enhancing readability.
+Ordinary doc comments `//!` and `///` provide a clearer, more idiomatic way to document modules and functions, enhancing readability.
 
 ```rust
 //! Description of file.
