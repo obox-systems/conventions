@@ -20,15 +20,15 @@ Crates/library, technologies, and skills used:
 ```
 For this demo, I've used `serde`/`serde_json` crates for API messages serialization and deserialization,
 the `actix-web` crate of `actix` framework for API server and routing,
-and `tokio` for async runtime used by `actix`. 
+and `tokio` for async runtime used by `actix`.
 ```
 
 ### Abstract
 
 Demo description: 5-10 sentences about the problem and how this demo solves it:
 
-- What does it do 
-- How does it work 
+- What does it do
+- How does it work
 - Competencies involved
 
 ### How to run
@@ -52,11 +52,11 @@ The `Try it out!` section
       cargo run --release
       ```
 ```
-  
+
 ### Screenshot or gif
- 
+
 Preferably to show screenshots. Preferably gif of how it works.
- 
+
 - If your demo doesn't have any meaningful output, you can use a screenshot of code that describes your demo logic in the best way ( ex. API usage )
 
 ### Repository should have
@@ -76,11 +76,12 @@ Duplicate and sync description in 3 places.
 - At your profile
 - In a readme file of the repository
 
-### Other recommendations 
+### Other recommendations
 
 #### Lints and warnings
 
 Make sure you have no warnings from clippy with this lints enabled:
+
 ```
 #![ warn( rust_2018_idioms ) ]
 #![ warn( missing_debug_implementations ) ]
