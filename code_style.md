@@ -37,34 +37,32 @@ This approach not only simplifies the import statements but also makes the code 
 
 Make sure you have no warnings from clippy with this lints enabled:
 
-```rust
-# Ensures code follows Rust 2018 edition best practices.
-// Requires documentation for all public items.
-#![ warn( missing_debug_implementations ) ]
-// Ensures public types implement Debug.
-#![ warn( missing_docs ) ]
-// Ensures code follows Rust 2018 edition best practices.
-#![ deny( rust_2018_idioms ) ]
-// Prevents use of features that may break in future Rust versions.
-#![ deny( future_incompatible ) ]
-// Disallows unsafe code, promoting safety.
-#![ deny( unsafe_code ) ]
-```
+Recommended lints configuration.
 
 > ✅ **Good**
 
 ```toml
+
 [workspace.lints.rust]
-# Requires documentation for all public items.
+# Warns if public items lack documentation.
 missing_docs = "warn"
-# Ensures public types implement Debug.
+# Warns for public types not implementing Debug.
 missing_debug_implementations = "warn"
-# Ensures code follows Rust 2018 edition best practices.
+# Denies non-idiomatic code for Rust 2018 edition.
 rust_2018_idioms = "deny"
-# Prevents use of features that may break in future Rust versions.
+# Denies using features that may break in future Rust versions.
 future_incompatible = "deny"
-# Disallows unsafe code, promoting safety.
+# Denies all unsafe code usage.
 unsafe-code = "deny"
+# Denies undocumented unsafe blocks.
+undocumented_unsafe_blocks = "deny"
+
+[workspace.lints.clippy]
+# Denies restrictive lints, limiting certain language features/patterns.
+restriction = "deny"
+# Denies pedantic lints, enforcing strict coding styles and conventions.
+pedantic = "deny"
+
 ```
 
 ## Prefer workspace lints over entry file lints
