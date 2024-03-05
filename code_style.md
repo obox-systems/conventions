@@ -44,24 +44,26 @@ Recommended lints configuration.
 ```toml
 
 [workspace.lints.rust]
-# Warns if public items lack documentation.
-missing_docs = "warn"
-# Warns for public types not implementing Debug.
-missing_debug_implementations = "warn"
+# Source :: https://github.com/obox-systems/conventions/blob/master/code_style.md#lints-and-warnings
+
 # Denies non-idiomatic code for Rust 2018 edition.
 rust_2018_idioms = "deny"
 # Denies using features that may break in future Rust versions.
 future_incompatible = "deny"
+# Warns if public items lack documentation.
+missing_docs = "warn"
+# Warns for public types not implementing Debug.
+missing_debug_implementations = "warn"
 # Denies all unsafe code usage.
-unsafe-code = "deny"
-# Denies undocumented unsafe blocks.
-undocumented_unsafe_blocks = "deny"
+unsafe-code = "warn"
 
 [workspace.lints.clippy]
 # Denies restrictive lints, limiting certain language features/patterns.
-restriction = "deny"
+restriction = "warn"
 # Denies pedantic lints, enforcing strict coding styles and conventions.
-pedantic = "deny"
+pedantic = "warn"
+# Denies undocumented unsafe blocks.
+undocumented_unsafe_blocks = "deny"
 
 ```
 
