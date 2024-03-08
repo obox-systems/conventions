@@ -185,3 +185,87 @@ use std::
 ```
 
 This approach simplifies tracking dependencies and enhances code readability.
+
+## Formatting
+
+#### New Lines for Blocks
+
+- Open `{`, `(`, `<` on new lines, except when the block is concise enough to fit on a single line.
+- Do not place the opening brace on the same line as a function or control structure signature.
+
+> ✅ **Good**
+
+```rust
+fn f1()
+{
+  if condition
+  {
+    // Code block
+  }
+}
+```
+
+#### Indentation
+
+- Prefer 2 spaces over tabs for consistent indentation across environments.
+
+#### Spaces Around Symbols
+
+- Include a space before and after `:`, `=`, and operators, excluding the namespace operator `::`.
+- Place a space after `,` to separate list items, such as function arguments or array elements.
+
+> ✅ **Good**
+
+```rust
+fn f1( a : f32, b : f32 )
+{
+  2 * ( a + b )
+}
+```
+
+#### Spaces for Blocks
+
+- After opening `{`, `(`, `<`, `[` and `|`, insert a space if followed by content on the same line.
+- Before closing `|`, `]`, `}`, `)` and `>`, insert a space if preceded by content on the same line.
+- Maintain consistent brace positioning for control structures and function definitions.
+
+> ✅ **Good**
+
+```rust
+use std::fmt::{ Debug, Display };
+#[ derive( Debug, Display ) ]
+struct MyInt( i32 );
+struct Struct1< T, U > { a : T, b : U };
+let lambda = | x : i32, y : i32| { f1( x + y ) };
+fn fmt( &self, f : &mut fmt::Formatter< '_ > ) -> fmt::Result;
+```
+
+#### Comments
+
+- Inline comments (`//`) should start with a space following the slashes for readability.
+
+#### Use Statement
+
+- Group related imports within `{}`, placing each import on a new line to reduce clutter.
+- This practice also aids in clearer version control diffs when modifying imports.
+
+> ✅ **Good**
+
+```rust
+use std::
+{
+  fmt::{ Formatter, Write },
+  path::PathBuf,
+  collections::HashSet,
+};
+```
+
+#### Nesting
+
+- Avoid complex, multi-level inline nesting. Prefer splitting content across multiple lines.
+- Opt for shorter, clearer lines over long, deeply nested ones to enhance code maintainability.
+
+#### Code Length
+
+- Aim for concise, focused functions to improve both readability and ease of maintenance.
+- Keep lines under 110 characters to accommodate various editor and IDE setups without horizontal scrolling.
