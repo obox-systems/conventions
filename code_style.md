@@ -1,4 +1,4 @@
-# Code Style Rules
+# Code Style Guidline
 
 
 ## Use::*
@@ -129,3 +129,59 @@ mod secure_connection
 ```
 
 By adhering to the use of doc comments, you maintain a uniform documentation style throughout your project, making it easier for developers to read and understand the codebase. This practice also aligns with Rust's community standards and tooling, which are optimized for parsing and displaying doc comments.
+
+## Importing: Local Entities
+
+Prefer making all entities defined within the crate or its parent accessible in the current scope. Favor importing higher-level modules over individual entities from external crates.
+
+When importing entities within your crate or from a parent file, aim for accessibility and clarity. It's advisable to prefer imports of high-level modules rather than specific, granular entities, especially when dealing with external crates. This approach enhances readability and maintainability by reducing clutter and focusing on module structure.
+
+- **Local vs. External Entities**: For entities defined in your own crate, feel free to use broad imports to make everything available in the current scope. However, for external crates, consider using more specific paths to avoid namespace pollution and potential conflicts.
+
+- **Granularity of Imports**: While it might be tempting to import only what you need from an external crate, overly granular imports can lead to long and hard-to-read import lists. Conversely, importing too broadly (e.g., using `*`) from external sources may introduce unused entities or overshadow local definitions.
+
+> ❌ **Bad**
+
+```rust
+use crate::plot::{ PlotDescription, PlotOptions, plot };
+use crate::path::{ AbsolutePath, refine };
+```
+
+> ✅ **Good**
+
+```rust
+use crate::*;
+use plot::{ PlotDescription, PlotOptions, plot };
+use path::{ AbsolutePath, refine };
+```
+
+### Importing: Structuring `std` Imports
+
+Consolidate `std` library imports into a single use statement. Avoid multi-level nesting within `{}` to keep imports readable. If nesting is unavoidable, ensure only one `{}` per line.
+
+> ❌ **Bad**
+
+```rust
+use std::fmt::{ Formatter, Write };
+use std::path::PathBuf;
+use std::collections::HashSet;
+```
+
+> ❌ **Bad**
+
+```rust
+use std::{ fmt::{ Formatter, Write }, fmt::path::PathBuf, collections::HashSet };
+```
+
+> ✅ **Good**
+
+```rust
+use std::
+{
+  fmt::{ Formatter, Write },
+  path::PathBuf,
+  collections::HashSet,
+};
+```
+
+This approach simplifies tracking dependencies and enhances code readability.
