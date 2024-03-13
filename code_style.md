@@ -55,7 +55,7 @@ missing_docs = "warn"
 # Warns for public types not implementing Debug.
 missing_debug_implementations = "warn"
 # Denies all unsafe code usage.
-unsafe-code = "warn"
+unsafe-code = "deny"
 
 [workspace.lints.clippy]
 # Denies restrictive lints, limiting certain language features/patterns.
@@ -65,6 +65,13 @@ pedantic = "warn"
 # Denies undocumented unsafe blocks.
 undocumented_unsafe_blocks = "deny"
 
+```
+
+If you add lint rules into workspace file don't forget to reuse them from crate's cargo files.
+
+```toml
+[lints]
+workspace = true
 ```
 
 ## Prefer workspace lints over entry file lints
@@ -186,12 +193,15 @@ use std::
 
 This approach simplifies tracking dependencies and enhances code readability.
 
-## Formatting
+## Codestyle Formatting
 
 #### New Lines for Blocks
 
 - Open `{`, `(`, `<` on new lines, except when the block is concise enough to fit on a single line.
 - Do not place the opening brace on the same line as a function or control structure signature.
+- Macro is not exception. When using macros like `quote!` and arguments for macro is longer to be on the same line with, place the opening `{` on a new line following the macro call.
+- For lambda expressions ensure that the opening brace `{` of the closure's body is placed on a new line, unless whole body of closure is on the same line.
+- For lambda expressions, ensure that the `|` symbols and parameters inside are separated by spaces from the parameters and the body block.
 
 > ✅ **Good**
 
@@ -205,13 +215,58 @@ fn f1()
 }
 ```
 
+> ✅ **Good**
+
+```rust
+let result = quote!
+{
+  #( #from_impls )*
+};
+```
+
+> ✅ **Good**
+
+```rust
+fields
+.iter()
+.map( | field |
+{
+  f1( field );
+});
+```
+
 #### Indentation
 
-- Prefer 2 spaces over tabs for consistent indentation across environments.
+- Use strictly 2 spaces over tabs for consistent indentation across environments. Avoid using 4 spaces or tabs.
+- When chaining method calls, start each method on a new line if including everything on the same line exceeds an admissible line length. Each method call in the chain should start directly below the first character of the chain start, without additional indentation. This ensures clarity and consistency without unnecessary spaces or alignment efforts.
+- When chaining method calls that exceed a single line's admissible length, each method call in the chain should start on a new line directly below the object or variable initiating the chain. These subsequent method calls should align with the first character of the initiating call, without additional indentation beyond what is used for the start of the chain. Avoid adding extra indentation before each method in the chain, as this can obscure the structure and flow of chained operations.
+- Method calls starting with a dot (`.method`) should not be indented further than the first call in the chain.
+
+> ✅ **Good**
+
+```rust
+struct Struct1
+{
+  a : i32,
+  b : i32,
+}
+```
+
+> ✅ **Good**
+
+```rust
+fields
+.iter()
+.map( | field |
+{
+  f1( field );
+});
+```
 
 #### Spaces Around Symbols
 
 - Include a space before and after `:`, `=`, and operators, excluding the namespace operator `::`.
+- Don't include a space before and after namespace operator `::`.
 - Place a space after `,` to separate list items, such as function arguments or array elements.
 
 > ✅ **Good**
@@ -269,3 +324,25 @@ use std::
 
 - Aim for concise, focused functions to improve both readability and ease of maintenance.
 - Keep lines under 110 characters to accommodate various editor and IDE setups without horizontal scrolling.
+
+#### Attribures
+
+- Each attribute should be placed on its own line to enhance readability.
+
+> ❌ **Bad**
+
+```rust
+#[ doc = "Setter for the '#field_ident' field." ] #[ inline ] pub fn age< Src >( mut self, src : Src ) -> Self {}
+```
+
+> ✅ **Good**
+
+```rust
+#[ doc = "Setter for the '#field_ident' field." ]
+#[ inline ]
+pub fn age< Src >( mut self, src : Src ) -> Self
+{
+}
+```
+
+<!-- That is my Rust codestyle formatting rules. Use it for all Rust code you generate -->
