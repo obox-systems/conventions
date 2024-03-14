@@ -1,7 +1,7 @@
 # Code Style Guidline
 
 
-## Use::*
+## Importing: `use of crate::*`
 
 For importing modules, prefer using `super::*` to collectively bring all items from the parent module into scope, rather than specifying each item individually. This approach simplifies import statements and maintains cleaner code. When importing from the current crate, `use crate::*` is acceptable if necessary to collectively import items from the crate root. Avoid using `crate::some_module::{item1, item2}` format for imports within the same crate. This guideline aims to streamline module imports and enhance code readability.
 
@@ -11,10 +11,7 @@ Directly specifying multiple items from a parent module or the crate root should
 
 ```rust
 // From a parent module
-use super::{ a, b, c };
-
-// From the crate root
-use crate::some_module::{ item1, item2 };
+use super::{ a, b, c::d };
 ```
 
 > ✅ **Good**
@@ -24,14 +21,85 @@ Use super::* for importing all items from a parent module collectively. Use crat
 ```rust
 // Importing everything from a parent module
 use super::*;
+use d;
+```
+
+> ❌ **Bad**
+
+Directly specifying multiple items from a parent module or the crate root should be avoided to keep import statements concise and maintainable.
+
+```rust
+// From the crate root
+use crate::some_module::{ item1, item2 };
+```
+
+> ✅ **Good**
+
+Use super::* for importing all items from a parent module collectively. Use crate::* sparingly, only when necessary to import items collectively from the crate root.
+
+```rust
 // Correctly importing items collectively from the crate root (use sparingly)
 use crate::*;
-
-use { a, b, c };
 use some_module::{ item1, item2 }
 ```
 
 This approach not only simplifies the import statements but also makes the code more consistent and easier to read and maintain. Remember, the goal is to achieve clarity and simplicity in your codebase, ensuring that imports are managed in a straightforward and uniform manner.
+
+## Importing: Local Entities
+
+Prefer making all entities defined within the crate or its parent accessible in the current scope. Favor importing higher-level modules over individual entities from external crates.
+
+When importing entities within your crate or from a parent file, aim for accessibility and clarity. It's advisable to prefer imports of high-level modules rather than specific, granular entities, especially when dealing with external crates. This approach enhances readability and maintainability by reducing clutter and focusing on module structure.
+
+- **Local vs. External Entities**: For entities defined in your own crate, feel free to use broad imports to make everything available in the current scope. However, for external crates, consider using more specific paths to avoid namespace pollution and potential conflicts.
+
+- **Granularity of Imports**: While it might be tempting to import only what you need from an external crate, overly granular imports can lead to long and hard-to-read import lists. Conversely, importing too broadly (e.g., using `*`) from external sources may introduce unused entities or overshadow local definitions.
+
+> ❌ **Bad**
+
+```rust
+use crate::plot::{ PlotDescription, PlotOptions, plot };
+use crate::path::{ AbsolutePath, refine };
+```
+
+> ✅ **Good**
+
+```rust
+use crate::*;
+use plot::{ PlotDescription, PlotOptions, plot };
+use path::{ AbsolutePath, refine };
+```
+
+### Importing: Structuring `std` Imports
+
+Consolidate `std` library imports into a single use statement. Avoid multi-level nesting within `{}` to keep imports readable. If nesting is unavoidable, ensure only one `{}` per line.
+
+> ❌ **Bad**
+
+```rust
+use std::fmt::{ Formatter, Write };
+use std::path::PathBuf;
+use std::collections::HashSet;
+```
+
+> ❌ **Bad**
+
+```rust
+use std::{ fmt::{ Formatter, Write }, fmt::path::PathBuf, collections::HashSet };
+```
+
+> ✅ **Good**
+
+```rust
+use std::
+{
+  fmt::{ Formatter, Write },
+  path::PathBuf,
+  collections::HashSet,
+};
+```
+
+This approach simplifies tracking dependencies and enhances code readability.
 
 ## Lints and warnings
 
@@ -136,62 +204,6 @@ mod secure_connection
 ```
 
 By adhering to the use of doc comments, you maintain a uniform documentation style throughout your project, making it easier for developers to read and understand the codebase. This practice also aligns with Rust's community standards and tooling, which are optimized for parsing and displaying doc comments.
-
-## Importing: Local Entities
-
-Prefer making all entities defined within the crate or its parent accessible in the current scope. Favor importing higher-level modules over individual entities from external crates.
-
-When importing entities within your crate or from a parent file, aim for accessibility and clarity. It's advisable to prefer imports of high-level modules rather than specific, granular entities, especially when dealing with external crates. This approach enhances readability and maintainability by reducing clutter and focusing on module structure.
-
-- **Local vs. External Entities**: For entities defined in your own crate, feel free to use broad imports to make everything available in the current scope. However, for external crates, consider using more specific paths to avoid namespace pollution and potential conflicts.
-
-- **Granularity of Imports**: While it might be tempting to import only what you need from an external crate, overly granular imports can lead to long and hard-to-read import lists. Conversely, importing too broadly (e.g., using `*`) from external sources may introduce unused entities or overshadow local definitions.
-
-> ❌ **Bad**
-
-```rust
-use crate::plot::{ PlotDescription, PlotOptions, plot };
-use crate::path::{ AbsolutePath, refine };
-```
-
-> ✅ **Good**
-
-```rust
-use crate::*;
-use plot::{ PlotDescription, PlotOptions, plot };
-use path::{ AbsolutePath, refine };
-```
-
-### Importing: Structuring `std` Imports
-
-Consolidate `std` library imports into a single use statement. Avoid multi-level nesting within `{}` to keep imports readable. If nesting is unavoidable, ensure only one `{}` per line.
-
-> ❌ **Bad**
-
-```rust
-use std::fmt::{ Formatter, Write };
-use std::path::PathBuf;
-use std::collections::HashSet;
-```
-
-> ❌ **Bad**
-
-```rust
-use std::{ fmt::{ Formatter, Write }, fmt::path::PathBuf, collections::HashSet };
-```
-
-> ✅ **Good**
-
-```rust
-use std::
-{
-  fmt::{ Formatter, Write },
-  path::PathBuf,
-  collections::HashSet,
-};
-```
-
-This approach simplifies tracking dependencies and enhances code readability.
 
 ## Codestyle Formatting
 
