@@ -43,6 +43,21 @@ use crate::*;
 use some_module::{ item1, item2 }
 ```
 
+> ❌ **Bad**
+
+```rust
+use crate::*;
+use super::*;
+```
+
+Use one or another way to reuse parent's entities, but not both simultinously.
+
+> ✅ **Good**
+
+```rust
+use crate::*;
+```
+
 This approach not only simplifies the import statements but also makes the code more consistent and easier to read and maintain. Remember, the goal is to achieve clarity and simplicity in your codebase, ensuring that imports are managed in a straightforward and uniform manner.
 
 ## Importing: Local Entities
@@ -358,3 +373,10 @@ pub fn age< Src >( mut self, src : Src ) -> Self
 ```
 
 <!-- That is my Rust codestyle formatting rules. Use it for all Rust code you generate -->
+
+<!-- xxx : add to avoid rebase
+git config --global pull.rebase false
+-->
+<!-- xxx : add to truncate lines -->
+<!-- xxx : add to use \n not \r\n -->
+
