@@ -352,7 +352,7 @@ use std::
 - Aim for concise, focused functions to improve both readability and ease of maintenance.
 - Keep lines under 110 characters to accommodate various editor and IDE setups without horizontal scrolling.
 
-#### Attribures
+#### Attributes
 
 - Each attribute should be placed on its own line to enhance readability.
 
@@ -372,45 +372,90 @@ pub fn age< Src >( mut self, src : Src ) -> Self
 }
 ```
 
-#### Macros by example, a. k. a. `macro_rules`
+## Macros by example, a. k. a. `macro_rules`
 
 Overall, code style for macros is the same as for the simple code, but there are some caveats you should know.
 
-- Generally, `=>` token should reside on a separate line from macro pattern
-- You are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
-- You can place the macro pattern and its body on the same line if they are short enough.
+#### `=>` Token
+
+Generally, `=>` token should reside on a separate line from macro pattern
 
 > ❌ **Bad**
 
 ```rust
-( @count $( $rest : expr ),* ) =>
-(
-  < [ () ] >::len( &[ $( hmap!( @single $rest ) ),* ] )
-);
+macro_rules! count
+{
+  ( @count $( $rest : expr ),* ) =>
+  (
+    /* body */
+  );
+}
 ```
 
-> ✅ **A Good Example**
+> ❌ **Bad**
 
 ```rust
-macro_rules! hmap
+macro_rules! count
 {
-  // if the macro can fit into a single line, do it
-  ( @single $( $x : tt )* ) => ( () );
+  (
+    @count $( $rest : expr ),*
+  ) => (
+    /* body */
+  );
+}
+```
 
-  // otherwise, place pattern, `=>` token and the body on multiple lines
+> ✅ **Good**
+
+```rust
+macro_rules! count
+{
   (
     @count $( $rest : expr ),*
   )
   =>
   (
-    < [ () ] >::len( &[ $( hmap!( @single $rest ) ),* ] )
+    /* body */
   );
+}
+```
 
+#### `{{` / `}}` in bodies
+
+You are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
+
+> ❌ **Bad**
+
+```rust
+macro_rules! hmap
+{
   (
-    $( $key : expr => $value : expr ),* $( , )?
+    /* pattern */
   )
   =>
-  {{ // also, you are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
+  {
+    {
+      let _cap = hmap!( @count $( $key ),* );
+      let mut _map = std::collections::HashMap::with_capacity( _cap );
+      $(
+        let _ = _map.insert( $key.into(), $value.into() );
+      )*
+      _map
+    }
+  };
+}
+```
+
+> ✅ **Good**
+
+```rust
+macro_rules! hmap
+{
+  (
+    /* pattern */
+  )
+  =>
+  {{
     let _cap = hmap!( @count $( $key ),* );
     let mut _map = std::collections::HashMap::with_capacity( _cap );
     $(
@@ -418,6 +463,34 @@ macro_rules! hmap
     )*
     _map
   }};
+}
+```
+
+#### Short matches
+
+You can place the macro pattern and i ts body on the same line if they are short enough.
+
+> ❌ **Bad**
+
+```rust
+macro_rules! empty
+{
+  (
+    @single $( $x : tt )*
+  )
+  =>
+  (
+    ()
+  );
+}
+```
+
+> ✅ **Good**
+
+```rust
+macro_rules! empty
+{
+  ( @single $( $x : tt )* ) => ( () );
 }
 ```
 
