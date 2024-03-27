@@ -372,6 +372,55 @@ pub fn age< Src >( mut self, src : Src ) -> Self
 }
 ```
 
+#### Macros by example, a. k. a. `macro_rules`
+
+Overall, code style for macros is the same as for the simple code, but there are some caveats you should know.
+
+- Generally, `=>` token should reside on a separate line from macro pattern
+- You are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
+- You can place the macro pattern and its body on the same line if they are short enough.
+
+> ❌ **Bad**
+
+```rust
+( @count $( $rest : expr ),* ) =>
+(
+  < [ () ] >::len( &[ $( hmap!( @single $rest ) ),* ] )
+);
+```
+
+> ✅ **A Good Example**
+
+```rust
+macro_rules! hmap
+{
+  // if the macro can fit into a single line, do it
+  ( @single $( $x : tt )* ) => ( () );
+
+  // otherwise, place pattern, `=>` token and the body on multiple lines
+  (
+    @count $( $rest : expr ),*
+  )
+  =>
+  (
+    < [ () ] >::len( &[ $( hmap!( @single $rest ) ),* ] )
+  );
+
+  (
+    $( $key : expr => $value : expr ),* $( , )?
+  )
+  =>
+  {{ // also, you are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
+    let _cap = hmap!( @count $( $key ),* );
+    let mut _map = std::collections::HashMap::with_capacity( _cap );
+    $(
+      let _ = _map.insert( $key.into(), $value.into() );
+    )*
+    _map
+  }};
+}
+```
+
 <!-- That is my Rust codestyle formatting rules. Use it for all Rust code you generate -->
 
 <!-- xxx : add to avoid rebase
