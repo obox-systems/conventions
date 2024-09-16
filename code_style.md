@@ -1,6 +1,5 @@
 # Code Style Guidline
 
-
 ## Importing: `use of crate::*`
 
 For importing modules, prefer using `super::*` to collectively bring all items from the parent module into scope, rather than specifying each item individually. This approach simplifies import statements and maintains cleaner code. When importing from the current crate, `use crate::*` is acceptable if necessary to collectively import items from the crate root. Avoid using `crate::some_module::{item1, item2}` format for imports within the same crate. This guideline aims to streamline module imports and enhance code readability.
@@ -225,10 +224,20 @@ By adhering to the use of doc comments, you maintain a uniform documentation sty
 #### New Lines for Blocks
 
 - Open `{`, `(`, `<` on new lines, except when the block is concise enough to fit on a single line.
-- Do not place the opening brace on the same line as a function or control structure signature.
+- Do not place the opening brace on the same line as a function, control structure signature, or struct initialization.
 - Macro is not exception. When using macros like `quote!` and arguments for macro is longer to be on the same line with, place the opening `{` on a new line following the macro call.
 - For lambda expressions ensure that the opening brace `{` of the closure's body is placed on a new line, unless whole body of closure is on the same line.
 - For lambda expressions, ensure that the `|` symbols and parameters inside are separated by spaces from the parameters and the body block.
+
+> ❌ **Bad**
+
+```rust
+fn f1() {
+  if condition {
+    // Code block
+  }
+}
+```
 
 > ✅ **Good**
 
@@ -242,6 +251,14 @@ fn f1()
 }
 ```
 
+> ❌ **Bad**
+
+```rust
+let result = quote! {
+  #( #from_impls )*
+};
+```
+
 > ✅ **Good**
 
 ```rust
@@ -249,6 +266,17 @@ let result = quote!
 {
   #( #from_impls )*
 };
+```
+
+> ❌ **Bad**
+
+```rust
+fields
+.iter()
+.map( | field | {
+  f1( field );
+});
+
 ```
 
 > ✅ **Good**
@@ -260,6 +288,37 @@ fields
 {
   f1( field );
 });
+```
+
+> ❌ **Bad**
+
+```rust
+let test_object = TestObject {
+  created_at : 1627845583,
+  tools : Some( vec![ {
+    let mut map = HashMap::new();
+    map.insert( "tool1".to_string(), "value1".to_string() );
+    map
+  } ] ),
+};
+```
+
+> ✅ **Good**
+
+```rust
+let test_object = TestObject
+{
+  created_at : 1627845583,
+  tools : Some
+  (
+    vec!
+    [{
+      let mut map = HashMap::new();
+      map.insert( "tool1".to_string(), "value1".to_string() );
+      map
+    }]
+  ),
+};
 ```
 
 #### Indentation
@@ -290,6 +349,28 @@ fields
 });
 ```
 
+### Chained Method Calls
+
+When chaining method calls that exceed a single line's admissible length, each method call in the chain should start on a new line directly below the object or variable initiating the chain. Avoid additional indentation for these subsequent method calls beyond what is used for the start of the chain. This ensures clarity and consistency without unnecessary spaces or alignment efforts.
+
+> ❌ **Bad**
+
+```rust
+Request::builder()
+  .method( Method::GET )
+  .header( "X-MBX-APIKEY", api_key )
+  .build()?;
+```
+
+> ✅ **Good**
+
+```rust
+Request::builder()
+.method( Method::GET )
+.header( "X-MBX-APIKEY", api_key )
+.build()?;
+```
+
 #### Spaces Around Symbols
 
 - Include a space before and after `:`, `=`, and operators, excluding the namespace operator `::`.
@@ -304,12 +385,10 @@ fn f1( a : f32, b : f32 )
   2 * ( a + b )
 }
 ```
-
 #### Spaces for Blocks
 
-- After opening `{`, `(`, `<`, `[` and `|`, insert a space if followed by content on the same line.
-- Before closing `|`, `]`, `}`, `)` and `>`, insert a space if preceded by content on the same line.
-- Maintain consistent brace positioning for control structures and function definitions.
+- Space After Opening Symbols : After opening `{`, `(`, `<`, `[`, and `|`, insert a space if they are followed by content on the same line. This includes not just braces and parentheses, but also less than symbols `<` when used in generic type parameters or comparisons, to enhance readability.
+- Space Before Closing Symbols : Before closing `|`, `]`, `}`, `)`, and `>`, insert a space if they are preceded by content on the same line. This rule is particularly important for greater than symbols `>` in generic type parameters or comparisons to avoid confusion with other operators or punctuation.
 
 > ✅ **Good**
 
@@ -318,8 +397,103 @@ use std::fmt::{ Debug, Display };
 #[ derive( Debug, Display ) ]
 struct MyInt( i32 );
 struct Struct1< T, U > { a : T, b : U };
-let lambda = | x : i32, y : i32| { f1( x + y ) };
+let lambda = | x : i32, y : i32 | { f1( x + y ) };
 fn fmt( &self, f : &mut fmt::Formatter< '_ > ) -> fmt::Result;
+```
+
+> ❌ **Bad**
+
+```rust
+use std::fmt::{Debug,Display};
+#[derive(Debug,Display)]
+struct MyInt(i32);
+struct Struct1<T,U>{a:T,b:U};
+let lambda = |x:i32, y:i32|{f1(x + y)};
+fn fmt(&self, f:&mut fmt::Formatter<'_>) -> fmt::Result;
+```
+
+#### Where Clause Formatting
+
+- New Line for Where Clause : The `where` keyword should start on a new line when the preceding function, struct, or impl declaration line is too long, or when it contributes to better readability.
+- One Parameter Per Line : Each parameter in the `where` clause should start on a new line. This enhances readability, especially when there are multiple constraints or when constraints are lengthy.
+
+> ✅ **Good**
+
+```rust
+impl< K, Definition, > CommandFormer< K, Definition, >
+where
+  K : core::hash::Hash + std::cmp::Eq,
+  Definition : former::FormerDefinition,
+  Definition::Types : former::FormerDefinitionTypes< Storage = CommandFormerStorage< K, > >
+{
+  // Implementation goes here
+}
+```
+
+> ❌ **Bad**
+
+```rust
+impl< K, Definition, > CommandFormer< K, Definition, > where K : core::hash::Hash + std::cmp::Eq, Definition : former::FormerDefinition, Definition::Types : former::FormerDefinitionTypes< Storage = CommandFormerStorage< K, > > {
+  // Implementation goes here
+}
+```
+
+#### Trait Implementation Formatting
+
+- **Trait on New Line**: When defining a trait implementation (`impl`) for a type, if the trait and the type it is being implemented for do not fit on the same line, the trait should start on a new line.
+- **Consistent Where Clause**: The `where` clause should also start on a new line to maintain readability, especially when there are constraints or multiple bounds.
+
+> ✅ **Good**
+
+```rust
+impl< K, __Context, __Formed, > ::Trait1
+for CommandFormerDefinitionTypes< K, __Context, __Formed, >
+where
+  K : core::hash::Hash + std::cmp::Eq,
+{
+}
+```
+
+> ❌ **Bad**
+
+```rust
+impl< K, __Context, __Formed, > ::Trait1 for CommandFormerDefinitionTypes< K, __Context, __Formed, > where K : core::hash::Hash + std::cmp::Eq,
+{
+}
+```
+
+#### Function Signature Formatting
+
+- **Parameter Alignment**: Function parameters should be listed with one per line, each starting on a new line after the opening parenthesis. This enhances readability and version control diff clarity.
+- **Return Type on New Line**: The return type should start on a new line when the parameters or function signature is too long or for consistency with the rest of the codebase.
+- **Where Clause Alignment**: The `where` clause should start on a new line, aligning it consistently beneath the function signature, not inline with the last parameter or return type.
+
+> ✅ **Good**
+
+```rust
+#[ inline( always ) ]
+pub fn begin< IntoEnd >
+(
+  mut storage : core::option::Option< < Definition::Types as former::FormerDefinitionTypes >::Storage >,
+  context : core::option::Option< < Definition::Types as former::FormerDefinitionTypes >::Context >,
+  on_end : IntoEnd,
+)
+->
+Self
+where
+  IntoEnd : ::core::convert::Into< < Definition as former::FormerDefinition >::End >
+{
+}
+```
+
+> ❌ **Bad**
+
+```rust
+#[ inline( always ) ]
+pub fn begin< IntoEnd >( mut storage : core::option::Option< < Definition::Types as former::FormerDefinitionTypes >::Storage >, context : core::option::Option< < Definition::Types as former::FormerDefinitionTypes >::Context >, on_end : IntoEnd, ) -> Self
+where IntoEnd : ::core::convert::Into< < Definition as former::FormerDefinition >::End >
+{
+}
 ```
 
 #### Comments
