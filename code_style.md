@@ -220,9 +220,7 @@ mod secure_connection
 
 By adhering to the use of doc comments, you maintain a uniform documentation style throughout your project, making it easier for developers to read and understand the codebase. This practice also aligns with Rust's community standards and tooling, which are optimized for parsing and displaying doc comments.
 
-## Codestyle Formatting
-
-#### New Lines for Blocks
+## New Lines for Blocks
 
 - Open `{`, `(`, `<` on new lines, except when the block is concise enough to fit on a single line.
 - Do not place the opening brace on the same line as a function, control structure signature, or struct initialization.
@@ -322,7 +320,7 @@ let test_object = TestObject
 };
 ```
 
-#### Indentation
+## Indentation
 
 - Use strictly 2 spaces over tabs for consistent indentation across environments. Avoid using 4 spaces or tabs.
 - When chaining method calls, start each method on a new line if including everything on the same line exceeds an admissible line length. Each method call in the chain should start directly below the first character of the chain start, without additional indentation. This ensures clarity and consistency without unnecessary spaces or alignment efforts.
@@ -350,7 +348,7 @@ fields
 });
 ```
 
-### Chained Method Calls
+## Chained Method Calls
 
 When chaining method calls that exceed a single line's admissible length, each method call in the chain should start on a new line directly below the object or variable initiating the chain. Avoid additional indentation for these subsequent method calls beyond what is used for the start of the chain. This ensures clarity and consistency without unnecessary spaces or alignment efforts.
 
@@ -372,7 +370,41 @@ Request::builder()
 .build()?;
 ```
 
-#### Spaces Around Symbols
+## Line Breaks for Method Chains and Namespace Access
+
+When breaking a line due to a method chain (using `.`) or namespace access (using `::`), maintain the same indentation as the first line. This rule applies to both method chaining and accessing nested namespaces or modules.
+
+> ❌ **Bad**
+
+```rust
+chrome.tabs.query( {} )
+  .then( function( tabs )
+  {
+    const tabList = document.getElementById( 'tabList' );
+  });
+
+std::collections::HashMap
+  ::new()
+  .insert( key, value );
+```
+
+> ✅ **Good**
+
+```rust
+chrome.tabs.query( {} )
+.then( function( tabs )
+{
+  const tabList = document.getElementById( 'tabList' );
+});
+
+std::collections::HashMap
+::new()
+.insert( key, value );
+```
+
+This approach maintains visual consistency and makes it easier to follow the flow of method calls or namespace access, especially in longer chains or nested structures.
+
+## Spaces Around Symbols
 
 - Include a space before and after `:`, `=`, and operators, excluding the namespace operator `::`.
 - Don't include a space before and after namespace operator `::`.
@@ -386,7 +418,7 @@ fn f1( a : f32, b : f32 )
   2 * ( a + b )
 }
 ```
-#### Spaces for Blocks
+## Spaces for Blocks
 
 - Space After Opening Symbols : After opening `{`, `(`, `<`, `[`, and `|`, insert a space if they are followed by content on the same line. This includes not just braces and parentheses, but also less than symbols `<` when used in generic type parameters or comparisons, to enhance readability.
 - Space Before Closing Symbols : Before closing `|`, `]`, `}`, `)`, and `>`, insert a space if they are preceded by content on the same line. This rule is particularly important for greater than symbols `>` in generic type parameters or comparisons to avoid confusion with other operators or punctuation.
@@ -413,7 +445,7 @@ let lambda = |x:i32, y:i32|{f1(x + y)};
 fn fmt(&self, f:&mut fmt::Formatter<'_>) -> fmt::Result;
 ```
 
-#### Where Clause Formatting
+## Where Clause Formatting
 
 - New Line for Where Clause : The `where` keyword should start on a new line when the preceding function, struct, or impl declaration line is too long, or when it contributes to better readability.
 - One Parameter Per Line : Each parameter in the `where` clause should start on a new line. This enhances readability, especially when there are multiple constraints or when constraints are lengthy.
@@ -439,7 +471,7 @@ impl< K, Definition, > CommandFormer< K, Definition, > where K : core::hash::Has
 }
 ```
 
-#### Trait Implementation Formatting
+## Trait Implementation Formatting
 
 - **Trait on New Line**: When defining a trait implementation (`impl`) for a type, if the trait and the type it is being implemented for do not fit on the same line, the trait should start on a new line.
 - **Consistent Where Clause**: The `where` clause should also start on a new line to maintain readability, especially when there are constraints or multiple bounds.
@@ -463,7 +495,7 @@ impl< K, __Context, __Formed, > ::Trait1 for CommandFormerDefinitionTypes< K, __
 }
 ```
 
-#### Function Signature Formatting
+## Function Signature Formatting
 
 - **Parameter Alignment**: Function parameters should be listed with one per line, each starting on a new line after the opening parenthesis. This enhances readability and version control diff clarity.
 - **Return Type on New Line**: The return type should start on a new line when the parameters or function signature is too long or for consistency with the rest of the codebase.
@@ -497,11 +529,11 @@ where IntoEnd : ::core::convert::Into< < Definition as former::FormerDefinition 
 }
 ```
 
-#### Comments
+## Comments
 
 - Inline comments (`//`) should start with a space following the slashes for readability.
 
-#### Use Statement
+## Use Statement
 
 - Group related imports within `{}`, placing each import on a new line to reduce clutter.
 - This practice also aids in clearer version control diffs when modifying imports.
@@ -517,17 +549,17 @@ use std::
 };
 ```
 
-#### Nesting
+## Nesting
 
 - Avoid complex, multi-level inline nesting. Prefer splitting content across multiple lines.
 - Opt for shorter, clearer lines over long, deeply nested ones to enhance code maintainability.
 
-#### Code Length
+## Code Length
 
 - Aim for concise, focused functions to improve both readability and ease of maintenance.
 - Keep lines under 110 characters to accommodate various editor and IDE setups without horizontal scrolling.
 
-#### Attributes
+## Attributes
 
 - Each attribute should be placed on its own line to enhance readability.
 
@@ -551,7 +583,7 @@ pub fn age< Src >( mut self, src : Src ) -> Self
 
 Overall, code style for macros is the same as for the simple code, but there are some caveats you should know.
 
-#### `=>` Token
+## `=>` Token
 
 Generally, `=>` token should reside on a separate line from macro pattern
 
@@ -595,7 +627,7 @@ macro_rules! count
 }
 ```
 
-#### `{{` / `}}` in bodies
+## `{{` / `}}` in bodies
 
 You are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
 
@@ -641,7 +673,7 @@ macro_rules! hmap
 }
 ```
 
-#### Short matches
+## Short matches
 
 You can place the macro pattern and i ts body on the same line if they are short enough.
 
@@ -669,7 +701,7 @@ macro_rules! empty
 }
 ```
 
-<!-- That is my Rust codestyle formatting rules. Use it for all Rust code you generate -->
+<!-- That is my Rust codestyle formatting rules -->
 
 <!-- xxx : add to avoid rebase
 git config --global pull.rebase false
