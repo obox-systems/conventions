@@ -137,13 +137,13 @@ docker run -it --device /dev/kvm -p 50922:10022 -v /tmp/.X11-unix:/tmp/.X11-unix
 
 This method is a bit tricky and will require you to find a working, pre-installed, MacOS virtual disk image.
 
-Short guide for this on VMWare can be found (here)[https://github.com/dortania/macOS-VMware-Guide/blob/master/making-the-virtual-machine.md].
+Short guide for this on VMWare can be found [here](https://github.com/dortania/macOS-VMware-Guide/blob/master/making-the-virtual-machine.md).
 
 ### VirtualBox
 
 This method requires you to install MacOS yourself. If you already own a device with MacOS installed, or can access it
 you can create an ISO installation file on that machine.
 
-Otherwise those images are available on multiple platforms, especially (The Internet Archive)[https://archive.org/search?query=MacOS+iso].
+Otherwise those images are available on multiple platforms, especially [The Internet Archive](https://archive.org/search?query=MacOS+iso).
 
-A short guide that does over the steps can be found (here)[https://www.xda-developers.com/how-install-macos-virtualbox/].
+A short guide that does over the steps can be found [here](https://www.xda-developers.com/how-install-macos-virtualbox/).

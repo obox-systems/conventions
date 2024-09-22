@@ -527,7 +527,7 @@ use std::
 - Aim for concise, focused functions to improve both readability and ease of maintenance.
 - Keep lines under 110 characters to accommodate various editor and IDE setups without horizontal scrolling.
 
-#### Attribures
+#### Attributes
 
 - Each attribute should be placed on its own line to enhance readability.
 
@@ -544,6 +544,128 @@ use std::
 #[ inline ]
 pub fn age< Src >( mut self, src : Src ) -> Self
 {
+}
+```
+
+## Macros by example, a. k. a. `macro_rules`
+
+Overall, code style for macros is the same as for the simple code, but there are some caveats you should know.
+
+#### `=>` Token
+
+Generally, `=>` token should reside on a separate line from macro pattern
+
+> ❌ **Bad**
+
+```rust
+macro_rules! count
+{
+  ( @count $( $rest : expr ),* ) =>
+  (
+    /* body */
+  );
+}
+```
+
+> ❌ **Bad**
+
+```rust
+macro_rules! count
+{
+  (
+    @count $( $rest : expr ),*
+  ) => (
+    /* body */
+  );
+}
+```
+
+> ✅ **Good**
+
+```rust
+macro_rules! count
+{
+  (
+    @count $( $rest : expr ),*
+  )
+  =>
+  (
+    /* body */
+  );
+}
+```
+
+#### `{{` / `}}` in bodies
+
+You are allowed to place the starting `{{` and the ending `}}` on the same line to improve readability
+
+> ❌ **Bad**
+
+```rust
+macro_rules! hmap
+{
+  (
+    /* pattern */
+  )
+  =>
+  {
+    {
+      let _cap = hmap!( @count $( $key ),* );
+      let mut _map = std::collections::HashMap::with_capacity( _cap );
+      $(
+        let _ = _map.insert( $key.into(), $value.into() );
+      )*
+      _map
+    }
+  };
+}
+```
+
+> ✅ **Good**
+
+```rust
+macro_rules! hmap
+{
+  (
+    /* pattern */
+  )
+  =>
+  {{
+    let _cap = hmap!( @count $( $key ),* );
+    let mut _map = std::collections::HashMap::with_capacity( _cap );
+    $(
+      let _ = _map.insert( $key.into(), $value.into() );
+    )*
+    _map
+  }};
+}
+```
+
+#### Short matches
+
+You can place the macro pattern and i ts body on the same line if they are short enough.
+
+> ❌ **Bad**
+
+```rust
+macro_rules! empty
+{
+  (
+    @single $( $x : tt )*
+  )
+  =>
+  (
+    ()
+  );
+}
+```
+
+> ✅ **Good**
+
+```rust
+macro_rules! empty
+{
+  ( @single $( $x : tt )* ) => ( () );
 }
 ```
 
