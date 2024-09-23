@@ -13,6 +13,7 @@ This document describes possible ways of testing your software on MacOS.
   - [Other virtualization solutions](#other-virtualization-solutions)
     - [VMWare](#vmware)
     - [VirtualBox](#virtualbox)
+    - [OSX-KVM](#osx-kvm)
 
 
 ## GitHub Action 
@@ -147,3 +148,9 @@ you can create an ISO installation file on that machine.
 Otherwise those images are available on multiple platforms, especially [The Internet Archive](https://archive.org/search?query=MacOS+iso).
 
 A short guide that does over the steps can be found [here](https://www.xda-developers.com/how-install-macos-virtualbox/).
+
+### OSX-KVM
+
+This method requires downloading qemu and managing some disk space for OSX Virtual Machine.
+
+[Videos](https://www.youtube.com/watch?v=VI0pikAHj2M) like this and [docs](https://github.com/kholia/OSX-KVM) are the best paths to start with KVM.
